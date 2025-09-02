@@ -1,0 +1,17 @@
+How It All Works Together: A Simple Story
+
+Let's put it all together in a step-by-step story:
+
+You set the stage: You connect your computer to the device with a network cable. You set your computer's IP address to a specific number manually (like 192.168.1.100).
+
+You prepare the manual: You download the correct firmware file and place it in the folder of your TFTP server application (which makes your computer speak the "baby language").
+
+You wake the device up: You plug the device in while holding its reset button. This forces it to wake up in a special "recovery mode," where it only listens for the TFTP language.
+
+The device asks for directions: The device shouts, "I need an address!" (DHCP request). If your computer is set up to be the DHCP clerk, it answers. Otherwise, your router does.
+
+The device asks for the manual: Now that it has an address and knows where to go, the device says to your computer in the simple TFTP language: "Hello, computer at 192.168.1.100, please give me the file new_firmware.bin."
+
+The transfer begins: Your computer sends the file, piece by piece. The device receives it and carefully writes it into its memory, replacing the old, coffee-stained manual.
+
+It reboots: Once the transfer is complete, the device says, "Thanks, I'm going to restart now!" It turns off and on again, this time using the new manual. It's now fixed and works perfectly!
