@@ -1,0 +1,60 @@
+firmware is not part of ssd
+the ssd compressed and turned into machine level code file .bin we call it as firmware
+
+NT9852x is a soc designed based on arm cortex processor
+
+i have a question that what is the purpose of target shell ??
+can we write our own firmware and flashit withour using target shell?
+
+i read below data for better understanding
+
+The Booting Process
+BootROM
+The BootROM is the very first stage. It's a small piece of code hardcoded into the
+system-on-a-chip (SoC), meaning it's non-volatile and can't be changed. Its primary job is to
+initialize the bare minimum of hardware and then locate and load the next stage of the bootloader.
+This is often accomplished by looking for a specific signature on various storage devices like an
+eMMC, SD card, or NOR/NAND flash. This stage is crucial because it acts as the immutable
+foundation of the entire boot process.
+Loader (First-Stage Bootloader)
+Once the BootROM finds a valid boot device, it loads the Loader, also known as the first-stage
+bootloader. This is a small, specialized program that runs from a small internal RAM. Its main tasks
+include initializing the DRAM (DDR), setting up the memory controller, and performing basic
+hardware checks. After it's done with these crucial setups, its final and most important task is to
+load the more feature-rich U-Boot into the newly initialized DDR memory.
+U-Boot (Second-Stage Bootloader)
+U-Boot (Das U-Boot) is a powerful and highly configurable second-stage bootloader. It provides
+a richer environment for system setup. In this stage, U-Boot performs more complex tasks like
+initializing network interfaces, setting up flash memory, and providing a command-line interface for
+debugging and flashing new firmware. It's at this stage that a developer can interrupt the boot
+process to perform maintenance. The final step for U-Boot is to load the Linux Kernel and its
+associated device tree blob (DTB) from storage into memory and then pass control to it.
+Linux Kernel
+The Linux Kernel is the heart of the operating system. Once loaded by U-Boot, it takes over
+system control. Its responsibilities are vast and include initializing all the device drivers for
+components like the network controller, display, and storage. It also sets up the scheduler, which
+manages the execution of all the system's processes. Crucially, the kernel's final action before
+starting user-space applications is to mount the root file system (rootfs), which contains all the
+necessary files and directories for the operating system to function.
+RootFS (Root File System)
+The Root File System (RootFS) is a collection of directories and files that make up the operating
+system. It's the environment in which all applications and system scripts run. Inside the rootfs, you'll
+find essential directories like /etc (for configuration files), /bin (for essential binaries), and /dev (for
+device files). A key component here is the init system (often using /etc/init.d scripts or a
+lightweight busybox implementation), which is responsible for starting all the services and
+applications needed for the device to operate, including the main application and any developer
+access daemons.
+Application
+The Application is the main program the device is designed to run. In your example of an IP
+camera, this would be the primary binary responsible for handling tasks like capturing video,
+encoding it, and streaming it via protocols like RTSP (Real-Time Streaming Protocol) and ONVIF
+(Open Network Video Interface Forum) for interoperability with other systems. It might also host a
+web server to provide a user interface for configuration and viewing. This is the ultimate goal of the
+entire boot process.
+Target Shell
+The Target Shell provides a developer with a command-line interface to the system, typically
+accessed via UART (Universal Asynchronous Receiver-Transmitter) for a direct serial connection
+or SSH (Secure Shell) for remote access over the network. This shell gives the developer the
+ability to debug issues, monitor system resources, modify configuration files, and even manually
+start or stop processes. It's the final stage from a developer's perspective, providing a powerful
+interface to control and troubleshoot the running system.
